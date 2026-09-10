@@ -639,9 +639,7 @@ function renderModal(){
       + (state.company?state.company.name:"")+'</b></div>'
       + '<div class="frow" style="margin-top:14px"><label>Books Beginning From</label>'
       + '<span class="colon">:</span><input class="tf" id="f1" style="min-width:130px" value="'+state.syncDate+'"></div>'
-      + '<p class="hint">Balances of all ledgers and stock items as on this date are uploaded as opening '
-      + 'balances. Vouchers dated on or after it are uploaded as individual transactions; anything earlier '
-      + 'stays inside the opening balance.</p>'
+      + '<p class="hint">Ledger balances as on this date upload as opening balances; vouchers from this date onward upload as transactions.</p>'
       + '<div class="err">'+state.err+'</div>'
       + '<div class="btnbar"><button class="btn" data-act="back"><u>Q</u>: Quit</button>'
       + '<button class="btn primary" data-act="accept"><u>A</u>: Accept</button></div>');
