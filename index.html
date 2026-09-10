@@ -437,7 +437,7 @@ var state = {
   screen:"gateway", gwIdx:19, mbbIdx:1, upIdx:1,
   modal:null, lastModal:null, coIdx:0, coPicked:false, coFilter:"",
   mobile:"", otp:"", err:"",
-  loggedIn:false, company:null, syncDate:"1-Apr-26",
+  loggedIn:false, company:null, syncDate:"1-Apr-26", uploadSummary:false, syncFocus:0,
   done:{}, busy:null, calcN:104, report:null,
   pendingKey:null, confirmText:"", loadTitle:"", pct:0, loadCb:null,
   elIdx:0, elMark:{}, elGone:{}, ignoreErrors:false, errKind:"ledger",
@@ -640,6 +640,9 @@ function renderModal(){
       + '<div class="frow" style="margin-top:14px"><label>Books Beginning From</label>'
       + '<span class="colon">:</span><input class="tf" id="f1" style="min-width:130px" value="'+state.syncDate+'"></div>'
       + '<p class="hint">Ledger balances as on this date upload as opening balances; vouchers from this date onward upload as transactions.</p>'
+      + '<div class="frow" style="margin-top:14px"><label>Upload Summary Data</label>'
+      + '<span class="colon">:</span><input class="tf" id="f2" readonly style="min-width:60px" value="'+(state.uploadSummary?"Yes":"No")+'"></div>'
+      + '<p class="hint">Only transaction-level summary is uploaded—the transaction value is shown but line items are not included on the invoice.</p>'
       + '<div class="err">'+state.err+'</div>'
       + '<div class="btnbar"><button class="btn" data-act="back"><u>Q</u>: Quit</button>'
       + '<button class="btn primary" data-act="accept"><u>A</u>: Accept</button></div>');
@@ -662,11 +665,34 @@ function renderModal(){
   if(state.modal==="company" && !state.coPicked) renderCoList();
   var f = $("f1");
   if(f){
-    try{ f.focus(); f.setSelectionRange(f.value.length,f.value.length); }catch(err){}
+    if(state.modal==="syncdate" && state.syncFocus===1){
+      var f2 = $("f2");
+      if(f2){ try{ f2.focus(); }catch(err){} f2.onclick = toggleSummary; }
+    } else {
+      try{ f.focus(); f.setSelectionRange(f.value.length,f.value.length); }catch(err){}
+    }
     if(state.modal==="company"){
       f.oninput = function(){ state.coFilter = f.value; state.coIdx = filtered()[0]; renderCoList(); };
     }
   }
+  if(state.modal==="syncdate"){
+    var f2 = $("f2"), f1 = $("f1");
+    if(f2){
+      f2.onclick = toggleSummary;
+      f2.onfocus = function(){ state.syncFocus = 1; };
+    }
+    if(f1) f1.onfocus = function(){ state.syncFocus = 0; };
+  }
+}
+function setSummary(val){
+  state.uploadSummary = val;
+  var f2 = $("f2"); if(f2) f2.value = val ? "Yes" : "No";
+}
+function toggleSummary(){ setSummary(!state.uploadSummary); }
+function focusSyncField(n){
+  state.syncFocus = n;
+  var el = n ? $("f2") : $("f1");
+  if(el){ try{ el.focus(); if(!n) el.setSelectionRange(el.value.length, el.value.length); }catch(err){} }
 }
 function dlg(inner){ return '<div class="dim"><div class="dlg">'+inner+'</div></div>'; }
 function tdlg(step, title, inner){
@@ -727,7 +753,7 @@ function startUpload(){
   state.err="";
   if(!state.loggedIn){ state.modal="login"; state.mobile=""; }
   else if(!state.company){ state.coPicked=false; state.coFilter=""; state.coIdx=0; state.modal="company"; }
-  else { state.modal="syncdate"; }
+  else { state.syncFocus=0; state.modal="syncdate"; }
   render();
 }
 function openLogin(){
@@ -756,6 +782,7 @@ function reset(loggedIn){
   state.screen="gateway"; state.gwIdx=19; state.modal=null; state.lastModal=null;
   state.err=""; state.mobile=""; state.otp=""; state.done={}; state.busy=null; state.calcN=104;
   state.coPicked=false; state.coFilter=""; state.coIdx=0;
+  state.uploadSummary=false; state.syncFocus=0;
   state.loggedIn = !!loggedIn;
   state.company = loggedIn ? (state.company||COMPANIES[0]) : null;
   $("calclines").innerHTML=""; $("calc").style.display="none";
@@ -782,7 +809,7 @@ function chooseCompany(i){
 }
 function confirmCompany(){
   if(state.coIdx < 0) return;
-  state.company = COMPANIES[state.coIdx]; state.err=""; state.modal="syncdate"; render();
+  state.company = COMPANIES[state.coIdx]; state.err=""; state.syncFocus=0; state.modal="syncdate"; render();
 }
 function acceptSyncDate(){
   var v = fieldValue().trim();
@@ -952,6 +979,17 @@ document.addEventListener("keydown", function(ev){
     }
     else if(k==="Enter"){ ev.preventDefault(); if(state.coIdx>=0) chooseCompany(state.coIdx); }
     return;
+  }
+  if(state.modal==="syncdate"){
+    if(k==="ArrowDown"){ ev.preventDefault(); focusSyncField(1); return; }
+    if(k==="ArrowUp"){ ev.preventDefault(); focusSyncField(0); return; }
+    if(state.syncFocus===1){
+      if(k==="y"||k==="Y"){ ev.preventDefault(); setSummary(true); return; }
+      if(k==="n"||k==="N"){ ev.preventDefault(); setSummary(false); return; }
+      if(k==="ArrowLeft"||k==="ArrowRight"){ ev.preventDefault(); toggleSummary(); return; }
+    }
+    if(k==="a"||k==="A"){ ev.preventDefault(); acceptSyncDate(); return; }
+    if(k==="q"||k==="Q"){ ev.preventDefault(); back(); return; }
   }
   if(state.modal){
     if(k==="Enter"){
