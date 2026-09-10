@@ -116,6 +116,122 @@
     font-size:11.5px;padding:2px 9px;cursor:pointer}
   .protobar button:hover{background:#4c5a68}
   kbd{background:#4a5764;border:1px solid #5f6d7a;border-bottom-width:2px;border-radius:3px;padding:0 4px;font-size:11px}
+
+  /* compact Tally-style dialogs (mobile / OTP / company) */
+  .dlg.sm{min-width:0;background:#fff;border:1px solid #4a4a4a;box-shadow:none;padding:12px 26px 16px}
+  .dlg.sm h3{margin:0 0 14px;font-size:15px}
+  .steplabel{font-size:10px;letter-spacing:.7px;color:#8c9aa8;text-transform:uppercase;text-align:right;
+    margin:-4px -12px 2px 0}
+  .onefield{display:flex;justify-content:center;padding:2px 0 4px}
+  .trow{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:14px;white-space:nowrap}
+  .tlabel{color:#12395f}
+  .tlabel.wide{width:150px}
+  .trow b{font-weight:700}
+  input.tf.cream{background:#ffe9b4;border:1px solid #1a9ec0;color:#000;font-weight:700;
+    font-size:14px;padding:3px 6px;min-width:190px}
+  input.tf.cream:focus{background:#ffe9b4;border-color:#1a9ec0}
+  .idbox{background:#ffb100;border:1px solid #1a9ec0;color:#000;font-weight:700;font-size:13.5px;
+    padding:2px 6px;max-width:200px;display:inline-block;word-break:break-all;line-height:1.35}
+  .keyhint{font-size:10.5px;color:#98a4b0;text-align:right;margin-top:8px}
+  .colist{margin:8px -26px -16px;border-top:1px solid #a9c6e6;background:#cfe6f7}
+  .colist .h{background:#0b63a5;color:#fff;font-size:13px;padding:2px 12px}
+  .colist .r{display:flex;justify-content:space-between;gap:30px;padding:2px 12px;font-size:13.5px;
+    color:#12395f;cursor:pointer}
+  .colist .r i{font-style:italic;color:#2b2b2b}
+  .colist .r.sel{background:#ffb100;color:#000}
+  .colist .r.sel i{color:#000}
+  .colist .r:hover:not(.sel){background:#bcd9f0}
+  .colist .r.none{cursor:default;color:#6b7f93;font-style:italic}
+  .cofoot{text-align:right;font-size:11.5px;color:#5c7a99;padding:2px 12px 6px}
+
+  /* Yes/No confirm box */
+  .dlg.ask{background:#fff;border:1px solid #4a4a4a;box-shadow:none;min-width:420px;
+    padding:18px 24px 12px;display:flex;flex-direction:column;min-height:140px}
+  .dlg.ask.wide{min-width:470px}
+  .asktitle{text-align:center;font-size:14.5px;color:#12395f}
+  .askbtns{margin-top:auto;text-align:right;font-size:14px;color:#5a6b7c;padding-top:18px}
+  .askbtns span{color:#1163b0;font-weight:700;cursor:pointer;margin-left:14px}
+  .askbtns span:hover{text-decoration:underline}
+
+  /* progress dialog */
+  .prog{width:520px;background:#fff;border:1px solid #9fb3c6;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+  .proghead{background:#dceffb;text-align:center;padding:14px 10px 16px;color:#12395f;font-size:13.5px}
+  .progtitle{font-weight:700;font-style:italic;font-size:16px;margin-bottom:6px}
+  .progbody{background:#fff;padding:22px 40px 34px;text-align:center}
+  .pctnum{font-size:22px;font-weight:700;color:#1189c8;margin-bottom:14px}
+  .pcttrack{height:20px;background:#dceffb;border-radius:10px;overflow:hidden}
+  .pctbar{height:100%;background:#4aa8dd;border-radius:10px;width:0;transition:width .09s linear}
+
+  /* error list screen */
+  .errwrap{background:#fff;height:100%;display:flex;flex-direction:column;overflow:hidden}
+  .errtitle{text-align:center;font-weight:700;font-size:14px;padding:6px 0 10px;
+    text-decoration:underline;text-underline-offset:4px;color:#12395f;flex:none}
+  .escroll{flex:1;overflow:auto}
+  table.etab{width:100%;border-collapse:collapse;font-size:13.5px;color:#12395f}
+  table.etab th{font-weight:700;text-align:left;padding:3px 10px;
+    border-top:1px solid #9aa8b5;border-bottom:1px solid #9aa8b5;border-right:1px solid #d5dde5}
+  table.etab th.n{text-align:right;width:54px}
+  table.etab td{padding:1px 10px;border-right:1px solid #d5dde5;white-space:nowrap;font-weight:700}
+  table.etab td.n{text-align:right;width:54px;border-right:0}
+  table.etab tr.gap td{height:12px;border-right:1px solid #d5dde5}
+  table.etab tbody tr{cursor:pointer}
+  table.etab tr.sel td{background:#ffb100;color:#000}
+  table.etab tr.picked td{background:#cfe6f7}
+  table.etab tr.sel.picked td{background:#ffb100}
+  table.etab tr.gone td{text-decoration:line-through;color:#9aa8b5;font-weight:400}
+  table.etab tbody tr:hover:not(.sel) td{background:#eef5fc}
+  .ttag{margin:120px auto 0;width:max-content;border:1px solid #4a4a4a;background:#fff;
+    font-size:12.5px;font-weight:600;padding:2px 8px;color:#12395f}
+  .rb.dim{color:#9aa8b5;background:#eaf1f8}
+  .rb.dim .k{color:#9aa8b5}
+  .errbar{display:flex;gap:0;background:#eaf1f8;border-top:1px solid #b7cfe8;font-size:12.5px;flex:none}
+  .errbar span{padding:4px 14px;border-right:1px solid #cddced;cursor:pointer;color:#12395f}
+  .errbar span:hover{background:#dbe9f7}
+  .errbar span.off{color:#a8b6c3;cursor:default}
+  .errbar span.off:hover{background:none}
+
+  /* Tally yes/no confirm */
+  .dlg.ask{min-width:0;background:#fff;border:1px solid #4a4a4a;box-shadow:none;
+    padding:18px 34px 12px;width:420px;height:170px;position:relative}
+  .dlg.ask .q{text-align:center;font-size:14.5px;color:#12395f}
+  .dlg.ask .yn{position:absolute;right:34px;bottom:14px;font-size:14.5px;color:#12395f}
+  .dlg.ask .yn b{color:#1668b3;cursor:pointer;font-weight:700}
+  .dlg.ask .yn b:hover{text-decoration:underline}
+
+  /* uploading loader */
+  .dlg.load{padding:0;width:620px;background:#fff;border:1px solid #b7cfe8;box-shadow:none}
+  .load-h{background:#dcefFB;padding:16px 0 18px;text-align:center}
+  .load-h .t{font-style:italic;font-weight:700;font-size:17px;color:#12395f}
+  .load-h .w{font-size:14px;color:#3c5a76;margin-top:8px}
+  .load-b{padding:26px 40px 46px;text-align:center}
+  .pct{font-size:30px;font-weight:700;color:#1668b3;letter-spacing:-1px}
+  .pct .hg{font-size:22px;margin:0 -2px}
+  .bar{margin-top:14px;height:20px;border-radius:10px;background:#dcefFB;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:#7fbde8;border-radius:10px;transition:width .12s linear}
+
+  /* error summary */
+  .dlg.errsum{width:520px}
+  .errsum .big{text-align:center;font-size:14.5px;color:#12395f;margin:2px 0 6px}
+  .errsum .big b{font-size:16px}
+
+  /* ledger error report screen */
+  .body.wide .left{display:none}
+  .rep{padding:6px 0 0}
+  .rep h2{text-align:center;font-size:15px;font-weight:700;margin:4px 0 10px;
+    text-decoration:underline;text-underline-offset:4px}
+  .rept{width:100%;border-collapse:collapse;font-size:13.5px}
+  .rept th{text-align:left;font-weight:700;border-bottom:1px solid #9fb4c8;
+    border-right:1px solid #cfd8e0;padding:2px 8px;color:#12395f}
+  .rept td{border-right:1px solid #e3e9ef;padding:1px 8px;color:#12395f;white-space:nowrap}
+  .rept td.sn{text-align:right;width:52px;font-weight:700}
+  .rept tr{cursor:pointer}
+  .rept tr.sel td{background:#ffb100;color:#000;font-weight:700}
+  .rept tr.mark td.sn:after{content:" \u2713";color:#1a7a3c}
+  .rept tr.gone td{color:#a8b4bf;text-decoration:line-through}
+  .rept tr:hover:not(.sel) td{background:#eaf2fb}
+  .rept .spacer td{height:10px;border:0}
+  .rb.off{color:#9fb0c0;cursor:default;background:#eef4fa}
+  .rb.off:hover{background:#eef4fa}
   #crash{display:none;background:#7a1c16;color:#ffe8e6;font-size:12px;padding:6px 12px;
     font-family:ui-monospace,Consolas,monospace}
 </style>
@@ -139,7 +255,7 @@
     <span class="x" data-act="reset">✕</span>
   </div>
 
-  <div class="body">
+  <div class="body" id="body">
     <div class="left">
       <div class="metarow"><span>CURRENT PERIOD</span><span>CURRENT DATE</span></div>
       <div class="metaval"><span>1-Apr-26 to 31-Mar-27</span><span>Monday, 20-Apr-2026</span></div>
@@ -152,6 +268,8 @@
     <div class="right" id="right"></div>
     <div id="modalroot"></div>
   </div>
+
+  <div class="errbar" id="errbar" style="display:none"></div>
 
   <div class="calc" id="calc" style="display:none">
     <div class="ch"><span>Calculator</span><span>✕</span></div>
@@ -172,10 +290,16 @@
 "use strict";
 
 var COMPANIES = [
-  {name:"Optipack Solutions",     gst:"29AABCO1234D1ZP", id:"1eb01c2b-61cd-44e9-9f1d-0b65d958b094"},
-  {name:"Jailaxmi Krushi Kendra", gst:"27AAECJ8842K1Z9", id:"7c31a9d0-2f44-4b81-a0e2-19c7b3d5e4aa"},
-  {name:"Shree Traders",          gst:"24AAFCS9911M1ZK", id:"90f2c7ab-88de-4c15-9c33-6d21ab77c0e1"},
-  {name:"Party Numbers Test",     gst:"—",               id:"b41d55e9-7710-4f0a-9a16-2c8ee1f0d773"}
+  {name:"aaditya innovations",  id:"0fc6e985-8d8e-477f-a251-2ceb63441f62"},
+  {name:"Agarwal plywood",      id:"a4c859f7-2417-455f-8953-0e0367a9e81b"},
+  {name:"ATE Engineers",        id:"bcbb7972-9c5f-47d9-99b3-0bf49bb72510"},
+  {name:"Dhanlakshmi Hardware", id:"4d638771-55a4-45d1-9223-40325ffbb351"},
+  {name:"guru amar industry",   id:"7441c06a-2761-450b-8ae1-281d848f40e0"},
+  {name:"item unit",            id:"9504486a-d1c8-4d9c-9b11-4135bd479b1b"},
+  {name:"kisan agritech",       id:"43011834-7f87-47cb-8e80-6e16235d74fa"},
+  {name:"matangi",              id:"26319122-bb84-4a97-b846-f11671fdc714"},
+  {name:"Nilan Electrical",     id:"d45e1438-f849-4a77-9f59-e4e2835a93a5"},
+  {name:"sample 2",             id:"2c02b087-4438-44e3-881c-4584688f5fbb"}
 ];
 
 var GW = [
@@ -195,46 +319,129 @@ var MBB = [
 ];
 var UP = [
   {g:"MASTER INTEGRATION"},
-  {t:"Led<b>G</b>er Group", up:"ledgergroup"},
-  {t:"<b>C</b>ustomer &amp; Supplier Masters", up:"parties"},
-  {t:"Customer &amp; Supplier Masters (<b>B</b>ulk)", up:"parties_bulk"},
-  {t:"Item <b>U</b>nits", up:"units"},
-  {t:"Item Group", up:"itemgroup"},
-  {t:"I<b>T</b>em Masters", up:"items"},
-  {t:"It<b>E</b>m Masters (Bulk)", up:"items_bulk"},
-  {g:"TRANSACTIONS"}, {t:"Upload Tran<b>S</b>actions", up:"txns"},
+  {t:"<b>A</b>ccounting Masters", up:"accounting"},
+  {t:"<b>I</b>nventory Masters",  up:"inventory"},
+  {g:"TRANSACTIONS"},
+  {t:"Upload <b>T</b>ransactions",                    up:"txns"},
+  {t:"Upload Transactions (<b>B</b>ulk)",             up:"txns_bulk"},
+  {t:"Upload Tran<b>S</b>actions (Bulk Status)",      act:"bulkstatus"},
   {g:"REPORTS"},
   {t:"<b>1</b>. Ledger Group", rep:"ledgergroup"},
-  {t:"<b>2</b>. Ledger",       rep:"parties"},
-  {t:"<b>3</b>. Unit",         rep:"units"},
-  {t:"<b>4</b>. Stock Group",  rep:"itemgroup"},
-  {t:"<b>5</b>. Stock Item",   rep:"items"},
-  {t:"<b>6</b>. Transactions", rep:"txns"}, {sp:1},
+  {t:"<b>2</b>. Ledger",       rep:"ledger"},
+  {t:"<b>3</b>. Unit",         rep:"unit"},
+  {t:"<b>4</b>. Stock Group",  rep:"stockgroup"},
+  {t:"<b>5</b>. Stock Item",   rep:"stockitem"},
+  {t:"<b>6</b>. Transactions", rep:"transactions"}, {sp:1},
   {t:"<b>Q</b>uit", act:"quit"}
 ];
+
+/* what each upload item sends, and the calculator lines it writes */
 var ENTITY = {
-  ledgergroup:{label:"Ledger Groups", total:18},
-  parties:{label:"Customer & Supplier Masters", total:214},
-  parties_bulk:{label:"Customer & Supplier Masters (Bulk)", total:214, bulk:true},
-  units:{label:"Item Units", total:12},
-  itemgroup:{label:"Item Groups", total:26},
-  items:{label:"Item Masters", total:96},
-  items_bulk:{label:"Item Masters (Bulk)", total:96, bulk:true},
-  txns:{label:"Transactions", total:273}
+  accounting:{label:"Accounting Masters", done:"232 records",
+    confirm:"Upload LedgerGroup Masters", loading:"Uploading Customer Masters",
+    errors:500, errUnit:"Ledgers", errKind:"ledger", errCtas:"both",
+    errHint:"Invalid pincode, mobile number, GSTIN or email.", steps:[
+    "Reading Ledger Groups from Tally ...",
+    "18 Ledger Groups uploaded - 0 failed",
+    "Reading Ledgers from Tally ...",
+    "214 Ledgers uploaded - 0 failed"]},
+  inventory:{label:"Inventory Masters", done:"134 records",
+    confirm:"Upload Inventory Masters", loading:"Uploading Stock Item Masters",
+    errors:5, errUnit:"Stock Items", errKind:"stockitem", errCtas:"view",
+    errHint:"Missing unit, duplicate name or unmapped stock group.", steps:[
+    "Reading Units from Tally ...",
+    "12 Units uploaded - 0 failed",
+    "Reading Stock Groups from Tally ...",
+    "26 Stock Groups uploaded - 0 failed",
+    "Reading Stock Items from Tally ...",
+    "96 Stock Items uploaded - 0 failed"]},
+  txns:{label:"Transactions", done:"273 vouchers",
+    confirm:"Upload Transactions", loading:"Uploading Transactions", steps:[
+    "Reading Vouchers from {d} ...",
+    "Uploading Transactions to MyBillBook ...",
+    "273 vouchers uploaded - 0 failed"]},
+  txns_bulk:{label:"Transactions (Bulk)", done:"273 vouchers",
+    confirm:"Upload Transactions in Bulk", loading:"Submitting Bulk Request", steps:[
+    "Reading Vouchers from {d} ...",
+    "Bulk request submitted - batch BLK-20260420-0007",
+    "273 vouchers queued for processing"]}
 };
+
+/* report items: which upload has to run before they show data */
+var REPORTS = {
+  ledgergroup:{label:"Ledger Group", total:18,  src:["accounting"]},
+  ledger:     {label:"Ledger",       total:214, src:["accounting"]},
+  unit:       {label:"Unit",         total:12,  src:["inventory"]},
+  stockgroup: {label:"Stock Group",  total:26,  src:["inventory"]},
+  stockitem:  {label:"Stock Item",   total:96,  src:["inventory"]},
+  transactions:{label:"Transactions",total:273, src:["txns","txns_bulk"]}
+};
+
+var ERRROWS = [
+  ["ARMAAN ANSARI","Sundry Debtors","Invalid Pincode"],
+  ["BABLU KURESHI","Sundry Debtors","Invalid Mobile No"],
+  ["CHAMPARAN ENTERPRISES","Sundry Debtors","Invalid GSTin No."],
+  ["DINESH KUMAR","Sundry Debtors","Invalid Pincode"],
+  ["Doma Sahni","Sundry Debtors","Invalid Mobile No"],
+  ["JITENDRA  YADAV","Sundry Debtors","Invalid Mobile No"],
+  ["MR SUNIL KUMAR","Sundry Debtors","Invalid Email ID"],
+  ["OM PRAKASH CHAUHAN","Sundry Debtors","Invalid Pincode"],
+  ["Palak Kumari","Sundry Debtors","Invalid Pincode"],
+  ["PIN","Sundry Debtors","Invalid Pincode"],
+  ["RUDAL RAY","Sundry Debtors","Invalid Pincode"],
+  ["SATISH PATEL","Sundry Debtors","Invalid Mobile No"],
+  ["Sonu Kumar Jii","Sundry Debtors","Invalid Mobile No"],
+  ["SURAJ KUMAR GUPTA","Sundry Debtors","Invalid Pincode"],
+  ["TULSYAN TRACTORS","Sundry Creditors","Invalid Pincode"]
+];
+var ERRCOUNT = 500;
+
 var MENUS = {
   gateway:{arr:GW, title:"Gateway of Tally",      crumbs:[], w:300, top:56},
   mbb:    {arr:MBB,title:"MYBillBook Integration",crumbs:["Gateway of Tally"], w:280, top:74},
-  upload: {arr:UP, title:"Tally to MBB - Upload", crumbs:["Gateway of Tally","MYBillBook Integration"], w:400, top:96}
+  upload: {arr:UP, title:"Tally to MBB - Upload", crumbs:["Gateway of Tally","MYBillBook Integration"], w:420, top:96}
 };
+
+var STOCKROWS = [
+  ["FIBER SHEET","ONE STOP ENTERPRISES",""],
+  ["G.C. SHEET","SHREE LAKHI METALS",""],
+  ["GP SEETS","SHREE LAKHI METALS",""],
+  ["G.P. SHEETT","SHREE LAKHI METALS",""],
+  ["PPGI SHEET","Shree Bala Ji Steel",""]
+];
+
+/* the two error/review screens */
+var ERRVIEWS = {
+  ledger:{
+    title:"Tally to MyBillBook Ledger Masters",
+    cols:["SNo.","Particulars","Group","Data Error"],
+    rows:ERRROWS, key:"accounting",
+    right:[["F4","Master Type",""],
+           ["F5","Upload Ledgers","uploadledgers"],
+           ["F9","Upload Ledgers<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Ignore Errors)","uploadignore"],
+           ["F7","Remove<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BillBook ID",""]]
+  },
+  stockitem:{
+    title:"Tally to MyBillBook Stockitem Masters",
+    cols:["SNo.","Particulars","Group","MyBillBook ID"],
+    rows:STOCKROWS, key:"inventory", tag:"TCBB T2B Stockitem",
+    right:[["F4","Master Type",""],
+           ["F5","Upload<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stockitem","uploadledgers"],
+           ["F7","Remove<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BillBook ID",""]]
+  }
+};
+
 var IDXKEY = {gateway:"gwIdx", mbb:"mbbIdx", upload:"upIdx"};
 
 var state = {
   screen:"gateway", gwIdx:19, mbbIdx:1, upIdx:1,
-  modal:null, lastModal:null, coIdx:0,
+  modal:null, lastModal:null, coIdx:0, coPicked:false, coFilter:"",
   mobile:"", otp:"", err:"",
   loggedIn:false, company:null, syncDate:"1-Apr-26",
-  done:{}, busy:null, calcN:104, report:null
+  done:{}, busy:null, calcN:104, report:null,
+  pendingKey:null, confirmText:"", loadTitle:"", pct:0, loadCb:null,
+  elIdx:0, elMark:{}, elGone:{}, ignoreErrors:false, errKind:"ledger",
+  errIdx:0, errRemoved:{}, errSel:{}
 };
 
 function $(id){ return document.getElementById(id); }
@@ -249,6 +456,9 @@ function selectable(arr){
 
 /* ---------------- render ---------------- */
 function render(){
+  if(state.screen==="errors"){ renderErrors(); renderModal(); return; }
+  document.querySelector(".left").style.display = "";
+  $("errbar").style.display = "none";
   var M = MENUS[state.screen];
   $("scrname").textContent = state.screen==="mbb" ? "MyBillBook Integration" : M.title;
   $("scrco").textContent = state.company ? state.company.name.toUpperCase() : "";
@@ -291,6 +501,63 @@ function render(){
   renderModal();
 }
 
+/* ---------------- error list screen ---------------- */
+function renderErrors(){
+  var V = ERRVIEWS[state.errKind] || ERRVIEWS.ledger;
+  $("scrname").textContent = V.title + " (In Developer Mode)";
+  $("scrco").textContent = state.company ? state.company.name.toUpperCase() : "";
+  document.querySelector(".left").style.display = "none";
+  document.querySelector(".center").style.flex = "1 1 auto";
+
+  var rows = "";
+  for(var i=0;i<V.rows.length;i++){
+    var r = V.rows[i];
+    var cls = (i===state.errIdx ? "sel " : "") + (state.errRemoved[i] ? "gone " : "")
+            + (state.errSel[i] ? "picked" : "");
+    rows += '<tr class="'+cls.trim()+'" data-act="errrow" data-arg="'+i+'">'
+          + '<td class="n">'+(i+1)+'.</td><td>'+r[0]+'</td>'
+          + '<td>'+r[1]+'</td><td>'+(r[2]||"")+'</td></tr>';
+  }
+  $("center").innerHTML =
+      '<div class="errwrap"><div class="errtitle">'+V.title+'</div>'
+    + '<div class="escroll"><table class="etab">'
+    + '<thead><tr><th class="n">'+V.cols[0]+'</th><th>'+V.cols[1]+'</th>'
+    + '<th>'+V.cols[2]+'</th><th>'+V.cols[3]+'</th></tr></thead>'
+    + '<tbody><tr class="gap"><td class="n"></td><td></td><td></td><td></td></tr>'
+    + rows + '</tbody></table>'
+    + (V.tag ? '<div class="ttag">'+V.tag+'</div>' : '')
+    + '</div></div>';
+
+  var rp = "";
+  for(var b=0;b<V.right.length;b++){
+    var btn = V.right[b], act = btn[2];
+    rp += '<div class="rb'+(act?"":" dim")+'"'+(act?' data-act="'+act+'"':'')+'>'
+        + '<span><span class="k">'+btn[0]+'</span>: '+btn[1]+'</span><span class="chev">\u2039</span></div>'
+        + (b===0 ? '<div class="rgap"></div>' : '');
+  }
+  $("right").innerHTML = rp;
+
+  $("errbar").style.display = "flex";
+  $("errbar").innerHTML =
+      '<span data-act="errquit"><u>Q</u>: Quit</span>'
+    + '<span data-act="errspace">Space: Select</span>'
+    + '<span data-act="errremove"><u>R</u>: Remove Line</span>'
+    + '<span class="'+(anyRemoved()?"":"off")+'" data-act="errrestore"><u>U</u>: Restore Line</span>';
+}
+function anyRemoved(){ for(var k in state.errRemoved) if(state.errRemoved[k]) return true; return false; }
+function errMove(d){
+  var n = (ERRVIEWS[state.errKind] || ERRVIEWS.ledger).rows.length;
+  state.errIdx = (state.errIdx + d + n) % n;
+  renderErrors();
+}
+function openErrors(){
+  var oe = ENTITY[state.pendingKey];
+  state.errKind = (oe && oe.errKind) ? oe.errKind : "ledger";
+  state.modal = null; state.screen = "errors";
+  state.errIdx = 0; state.errRemoved = {}; state.errSel = {};
+  render();
+}
+
 /* ---------------- modals ---------------- */
 function renderModal(){
   var root = $("modalroot");
@@ -300,80 +567,137 @@ function renderModal(){
   /* same dialog already on screen: refresh only the parts that change,
      so the field the user is typing in is never destroyed */
   if(state.lastModal === state.modal){
+    if(state.modal==="loading"){ paintLoader(); return; }
     var e = root.querySelector(".err");
     if(e) e.textContent = state.err;
-    if(state.modal==="company"){
-      var pis = root.querySelectorAll(".pi");
-      for(var k=0;k<pis.length;k++) pis[k].className = "pi" + (k===state.coIdx ? " sel" : "");
-    }
+    if(state.modal==="company" && !state.coPicked) renderCoList();
     return;
   }
 
   var h = "";
-  if(state.modal==="login"){
-    h = dlg('<h3>MyBillBook Login</h3>'
-      + '<div class="frow"><label>Mobile No.</label><span class="colon">:</span>'
-      + '<input class="tf" id="f1" inputmode="numeric" maxlength="10" value="'+state.mobile+'" placeholder="10-digit number"></div>'
-      + '<p class="hint">Use the mobile number registered with your MyBillBook account. '
-      + 'A 6-digit verification code will be sent to this number.</p>'
+  if(state.modal==="confirm"){
+    var ce = ENTITY[state.pendingKey];
+    h = '<div class="dim"><div class="dlg ask">'
+      + '<div class="q">' + (state.confirmText || (ce ? ce.confirm : "Upload")) + '</div>'
+      + '<div class="yn"><b data-act="yes">Yes</b> or <b data-act="no">No</b></div>'
+      + '</div></div>';
+  }
+  else if(state.modal==="loading"){
+    h = '<div class="dim"><div class="dlg load">'
+      + '<div class="load-h"><div class="t">' + state.loadTitle + '</div>'
+      + '<div class="w">Please wait...</div></div>'
+      + '<div class="load-b"><div class="pct" id="pctText">0<span class="hg">&#8987;</span>%</div>'
+      + '<div class="bar"><i id="pctBar"></i></div></div>'
+      + '</div></div>';
+  }
+  else if(state.modal==="errors"){
+    var ee = ENTITY[state.pendingKey] || ENTITY.accounting;
+    var ctas = (ee.errCtas==="view" ? "" : '<button class="btn" data-act="no"><u>Q</u>: Quit</button>')
+             + '<button class="btn' + (ee.errCtas==="view" ? " primary" : "") + '" data-act="viewerr">'
+             + '<u>V</u>: View Errors</button>';
+    if(ee.errCtas==="both")
+      ctas += '<button class="btn primary" data-act="uploaderr"><u>U</u>: Upload with Errors</button>';
+    h = dlg('<h3>Data Errors Found</h3>'
+      + '<p class="big" style="text-align:center;font-size:14.5px;margin:2px 0 10px">'
+      + '<b>' + ee.errors + ' ' + ee.errUnit + '</b> have data errors and were not uploaded.</p>'
+      + '<p class="hint" style="text-align:center;max-width:none">' + (ee.errHint||"") + '</p>'
+      + '<div class="btnbar">' + ctas + '</div>');
+  }
+  else if(state.modal==="login"){
+    h = tdlg(1, 'Enter Your Mobile Number',
+        '<div class="onefield"><input class="tf cream" id="f1" inputmode="numeric" maxlength="10" value="'+state.mobile+'"></div>'
       + '<div class="err">'+state.err+'</div>'
-      + '<div class="btnbar"><button class="btn" data-act="back"><u>Q</u>: Quit</button>'
-      + '<button class="btn primary" data-act="mobile"><u>A</u>: Send code</button></div>');
+      + '<div class="keyhint">Enter &crarr; to continue</div>');
   }
   else if(state.modal==="otp"){
-    h = dlg('<h3>Verify Mobile Number</h3>'
-      + '<div class="frow"><label>Enter OTP</label><span class="colon">:</span>'
-      + '<input class="tf" id="f1" inputmode="numeric" maxlength="6" value="'+state.otp+'" placeholder="6 digits"></div>'
-      + '<p class="hint">Code sent to +91 '+state.mobile+'. Resend available after 30 seconds.<br>'
-      + '<em>Prototype: any 6 digits will pass.</em></p>'
+    h = tdlg(1, 'Enter OTP',
+        '<div class="trow"><span class="tlabel">Mobile No.</span><b>'+state.mobile+'</b></div>'
+      + '<div class="trow"><span class="tlabel">OTP</span>'
+      + '<input class="tf cream" id="f1" inputmode="numeric" maxlength="6" value="'+state.otp+'"></div>'
       + '<div class="err">'+state.err+'</div>'
-      + '<div class="btnbar"><button class="btn" data-act="back"><u>Q</u>: Back</button>'
-      + '<button class="btn primary" data-act="otp"><u>A</u>: Verify</button></div>');
+      + '<div class="keyhint">Enter &crarr; to continue &middot; Esc to go back</div>');
   }
   else if(state.modal==="company"){
-    var list = "";
-    for(var i=0;i<COMPANIES.length;i++){
-      list += '<div class="pi'+(i===state.coIdx?" sel":"")+'" data-act="company" data-arg="'+i+'">'
-            + COMPANIES[i].name + '<small>GSTIN '+COMPANIES[i].gst+' · ID '+COMPANIES[i].id.slice(0,8)+'…</small></div>';
+    if(state.coPicked){
+      var c = COMPANIES[state.coIdx];
+      h = tdlg(2, 'Select Company',
+          '<div class="trow"><span class="tlabel wide">Company Name</span><span class="colon">:</span><b>'+c.name+'</b></div>'
+        + '<div class="keyhint">Enter &crarr; to continue &middot; Esc to reselect</div>');
+    } else {
+      h = tdlg(2, 'Select Company',
+          '<div class="trow"><span class="tlabel wide">Company Name</span><span class="colon">:</span>'
+        + '<input class="tf cream" id="f1" style="min-width:300px" value="'+state.coFilter+'"></div>'
+        + '<div class="colist"><div class="h">List of Company</div><div id="colistrows"></div>'
+        + '<div class="cofoot"><span id="cocount"></span> &#9660;</div></div>');
     }
-    h = '<div class="dim"><div class="picker"><div class="head">List of MyBillBook Companies</div>'
-      + '<div class="pnote">Linked to +91 '+(state.mobile||"98765 43210")+'</div>'
-      + list
-      + '<div class="pnote" style="border-top:1px solid #b9d0e8">Tally company <b>Optipack Solutions</b> '
-      + 'will be mapped to the company you select.</div></div></div>';
   }
   else if(state.modal==="syncdate"){
-    h = dlg('<h3>Sync Setup</h3><div class="sect">Tally to MBB (Upload)</div>'
+    h = dlg('<div class="steplabel">Step 3 of 3</div>'
+      + '<h3>Upload Setup</h3><div class="sect">Tally to MBB (Upload)</div>'
       + '<div class="frow"><label>Tally Company</label><span class="colon">:</span><b>Optipack Solutions</b></div>'
       + '<div class="frow"><label>MyBillBook Company</label><span class="colon">:</span><b>'
       + (state.company?state.company.name:"")+'</b></div>'
-      + '<div class="frow" style="margin-top:14px"><label>Sync Start (Opening Bal/Voucher Upload)</label>'
+      + '<div class="frow" style="margin-top:14px"><label>Books Beginning From</label>'
       + '<span class="colon">:</span><input class="tf" id="f1" style="min-width:130px" value="'+state.syncDate+'"></div>'
-      + '<p class="hint">Vouchers dated on or after this date are uploaded to MyBillBook. Balances of all '
-      + 'ledgers and stock items as on this date are uploaded as opening balances, so nothing before it is '
-      + 'sent as individual transactions.</p>'
+      + '<p class="hint">Balances of all ledgers and stock items as on this date are uploaded as opening '
+      + 'balances. Vouchers dated on or after it are uploaded as individual transactions; anything earlier '
+      + 'stays inside the opening balance.</p>'
       + '<div class="err">'+state.err+'</div>'
       + '<div class="btnbar"><button class="btn" data-act="back"><u>Q</u>: Quit</button>'
       + '<button class="btn primary" data-act="accept"><u>A</u>: Accept</button></div>');
   }
   else if(state.modal==="report"){
-    var ent = ENTITY[state.report], rows = reportRows(state.report), body="";
+    var ent = REPORTS[state.report], rows = reportRows(state.report), body="";
     for(var j=0;j<rows.length;j++)
       body += '<div class="frow"><label>'+rows[j][0]+'</label><span class="colon">:</span><b>'+rows[j][1]+'</b></div>';
     h = dlg('<h3>'+ent.label+' – Upload Status</h3>'
       + '<div class="frow"><label>MyBillBook Company</label><span class="colon">:</span><b>'
       + (state.company?state.company.name:"—")+'</b></div>'
-      + '<div class="frow" style="margin-bottom:14px"><label>Sync start</label><span class="colon">:</span><b>'
+      + '<div class="frow" style="margin-bottom:14px"><label>Books beginning from</label><span class="colon">:</span><b>'
       + state.syncDate+'</b></div>' + body
       + '<div class="btnbar"><button class="btn primary" data-act="back"><u>Q</u>: Quit</button></div>');
   }
 
   root.innerHTML = h;
   state.lastModal = state.modal;
+  if(state.modal==="loading") paintLoader();
+  if(state.modal==="company" && !state.coPicked) renderCoList();
   var f = $("f1");
-  if(f){ try{ f.focus(); f.setSelectionRange(f.value.length,f.value.length); }catch(err){} }
+  if(f){
+    try{ f.focus(); f.setSelectionRange(f.value.length,f.value.length); }catch(err){}
+    if(state.modal==="company"){
+      f.oninput = function(){ state.coFilter = f.value; state.coIdx = filtered()[0]; renderCoList(); };
+    }
+  }
 }
 function dlg(inner){ return '<div class="dim"><div class="dlg">'+inner+'</div></div>'; }
+function tdlg(step, title, inner){
+  return '<div class="dim"><div class="dlg sm">'
+       + '<div class="steplabel">Step '+step+' of 3</div>'
+       + '<h3>'+title+'</h3>' + inner + '</div></div>';
+}
+
+/* company list: filtered indices, and a list-only re-render so the
+   name field the user is typing in never gets replaced */
+function filtered(){
+  var q = (state.coFilter||"").toLowerCase(), out = [];
+  for(var i=0;i<COMPANIES.length;i++)
+    if(COMPANIES[i].name.toLowerCase().indexOf(q) > -1) out.push(i);
+  return out.length ? out : [];
+}
+function renderCoList(){
+  var rows = $("colistrows"); if(!rows) return;
+  var f = filtered(), html = "";
+  if(f.indexOf(state.coIdx) < 0) state.coIdx = f.length ? f[0] : -1;
+  for(var k=0;k<f.length;k++){
+    var i = f[k], c = COMPANIES[i];
+    html += '<div class="r'+(i===state.coIdx?" sel":"")+'" data-act="company" data-arg="'+i+'">'
+          + '<span>'+c.name+'</span></div>';
+  }
+  if(!f.length) html = '<div class="r none">No matching company</div>';
+  rows.innerHTML = html;
+  var n = $("cocount"); if(n) n.textContent = f.length;
+}
 
 /* ---------------- navigation ---------------- */
 function move(d){
@@ -393,6 +717,7 @@ function activate(){
   if(row.act==="upload"){ startUpload(); return; }
   if(row.up){ runItem(row.up); return; }
   if(row.rep){ state.report=row.rep; state.modal="report"; render(); return; }
+  if(row.act==="bulkstatus"){ state.modal="bulk"; render(); return; }
   if(row.act==="quit"){
     if(state.screen==="upload"){ state.screen="mbb"; state.mbbIdx=1; }
     else { state.screen="gateway"; state.gwIdx=19; }
@@ -403,7 +728,7 @@ function activate(){
 function startUpload(){
   state.err="";
   if(!state.loggedIn){ state.modal="login"; state.mobile=""; }
-  else if(!state.company){ state.modal="company"; }
+  else if(!state.company){ state.coPicked=false; state.coFilter=""; state.coIdx=0; state.modal="company"; }
   else { state.modal="syncdate"; }
   render();
 }
@@ -412,12 +737,18 @@ function openLogin(){
   state.modal="login"; state.mobile=""; state.err=""; render();
 }
 function openCompany(){
-  if(!state.loggedIn){ state.modal="login"; state.mobile=""; } else { state.modal="company"; }
+  if(!state.loggedIn){ state.modal="login"; state.mobile=""; }
+  else { state.coPicked=false; state.coFilter=""; state.coIdx=0; state.modal="company"; }
   state.err=""; render();
 }
 function back(){
   if(state.modal==="otp"){ state.modal="login"; state.err=""; }
-  else if(state.modal==="syncdate"){ state.modal="company"; state.err=""; }
+  else if(state.modal==="company" && state.coPicked){
+    state.coPicked=false; state.err=""; state.lastModal=null;
+  }
+  else if(state.modal==="syncdate"){
+    state.modal="company"; state.coPicked=false; state.lastModal=null; state.err="";
+  }
   else if(state.modal){ state.modal=null; state.report=null; state.err=""; }
   else if(state.screen==="upload"){ state.screen="mbb"; state.mbbIdx=1; }
   else if(state.screen==="mbb"){ state.screen="gateway"; state.gwIdx=19; }
@@ -426,6 +757,7 @@ function back(){
 function reset(loggedIn){
   state.screen="gateway"; state.gwIdx=19; state.modal=null; state.lastModal=null;
   state.err=""; state.mobile=""; state.otp=""; state.done={}; state.busy=null; state.calcN=104;
+  state.coPicked=false; state.coFilter=""; state.coIdx=0;
   state.loggedIn = !!loggedIn;
   state.company = loggedIn ? (state.company||COMPANIES[0]) : null;
   $("calclines").innerHTML=""; $("calc").style.display="none";
@@ -443,19 +775,28 @@ function submitMobile(){
 function submitOtp(){
   var o = fieldValue().replace(/\D/g,"");
   if(o.length!==6){ state.err="Enter the 6-digit code sent to your mobile number."; renderModal(); return; }
-  state.otp=o; state.loggedIn=true; state.err=""; state.coIdx=0; state.modal="company"; render();
+  state.otp=o; state.loggedIn=true; state.err=""; state.coIdx=0; state.coPicked=false; state.coFilter=""; state.modal="company"; render();
 }
 function chooseCompany(i){
-  state.company = COMPANIES[i]; state.coIdx=i; state.err=""; state.modal="syncdate"; render();
+  state.coIdx = i; state.coPicked = true; state.err = "";
+  state.lastModal = null;   /* force the dialog to rebuild in the picked layout */
+  render();
+}
+function confirmCompany(){
+  if(state.coIdx < 0) return;
+  state.company = COMPANIES[state.coIdx]; state.err=""; state.modal="syncdate"; render();
 }
 function acceptSyncDate(){
   var v = fieldValue().trim();
   if(!/^\d{1,2}-[A-Za-z]{3}-\d{2}$/.test(v)){
     state.err="Use the Tally date format, for example 1-Apr-26."; renderModal(); return;
   }
-  state.syncDate=v; state.err=""; state.modal=null;
+  state.syncDate=v; state.err="";
   state.screen="upload"; state.upIdx=1; state.done={}; state.calcN=104;
   $("calclines").innerHTML=""; $("calc").style.display="none";
+  /* offer the first upload right away; No drops the user on the upload menu */
+  state.pendingKey="accounting"; state.confirmText="Upload Accounting Masters";
+  state.modal="confirm"; state.lastModal=null;
   render();
 }
 
@@ -469,32 +810,72 @@ function logLine(text){
 }
 function runItem(key){
   if(state.busy) return;
-  var e = ENTITY[key];
-  state.busy = key; render();
-  var steps = key==="txns"
-    ? ["Reading Vouchers from "+state.syncDate+" ...",
-       "Uploading Transactions to MyBillBook ...",
-       e.total+" vouchers uploaded – 0 failed"]
-    : ["Reading "+e.label+" from Tally ...",
-       "Uploading "+e.label+(e.bulk?" in bulk":"")+" to MyBillBook ...",
-       e.total+" records uploaded – 0 failed"];
-  steps.forEach(function(s,i){
-    setTimeout(function(){
-      logLine(s);
-      if(i===steps.length-1){
-        state.done[key] = e.total + (key==="txns" ? " vouchers" : " records");
-        state.busy = null; render();
-      }
-    }, 450*(i+1));
+  state.pendingKey = key; state.confirmText = ""; state.err = ""; state.modal = "confirm"; render();
+}
+function confirmNo(){ state.modal = null; state.pendingKey = null; state.confirmText = ""; render(); }
+function confirmYes(){
+  var key = state.pendingKey, e = ENTITY[key];
+  startLoader(e.loading, function(){
+    if(e.errors && !state.done[key]){ state.modal = "errors"; render(); }
+    else finishItem(key);
   });
 }
+function uploadWithErrors(){
+  var key = state.pendingKey, e = ENTITY[key];
+  state.ignoreErrors = true;
+  startLoader(e.loading, function(){ finishItem(key); });
+}
+function viewErrors(){ openErrors(); }
+function finishItem(key){
+  var e = ENTITY[key];
+  e.steps.forEach(function(t){ logLine(t.replace("{d}", state.syncDate)); });
+  if(key==="accounting" && state.ignoreErrors)
+    logLine("500 Ledgers uploaded with data errors");
+  state.done[key] = e.done;
+  state.busy = null; state.modal = null; state.pendingKey = null; state.ignoreErrors = false;
+  state.confirmText = "";
+  if(state.screen==="errors") state.screen = "upload";
+  if(key==="accounting" && !state.done.inventory){
+    state.pendingKey = "inventory"; state.confirmText = "Upload Inventory Masters";
+    state.modal = "confirm"; state.lastModal = null;
+  }
+  render();
+}
+
+function errScreenUpload(ignore){
+  var V = ERRVIEWS[state.errKind] || ERRVIEWS.ledger, key = V.key;
+  state.pendingKey = key; state.ignoreErrors = !!ignore;
+  var what = (key==="inventory") ? "Stock Items" : "Ledgers";
+  startLoader("Uploading " + what + (ignore ? " (Ignoring Errors)" : ""),
+              function(){ finishItem(key); });
+}
+
+/* ---------------- loader ---------------- */
+function startLoader(title, cb){
+  state.loadTitle = title; state.pct = 0; state.loadCb = cb;
+  state.modal = "loading"; state.lastModal = null; render();
+  var timer = setInterval(function(){
+    state.pct += 4 + Math.floor(Math.random()*9);
+    if(state.pct >= 100){
+      state.pct = 100; clearInterval(timer); paintLoader();
+      setTimeout(function(){ var f = state.loadCb; state.loadCb = null; if(f) f(); }, 400);
+    } else paintLoader();
+  }, 130);
+}
+function paintLoader(){
+  var t = document.getElementById("pctText"), b = document.getElementById("pctBar");
+  if(t) t.innerHTML = state.pct + '<span class="hg">&#8987;</span>%';
+  if(b) b.style.width = state.pct + "%";
+}
+
 function reportRows(key){
-  var e = ENTITY[key], up = state.done[key] ? e.total : 0;
-  return [["In Tally", String(e.total)],
+  var r = REPORTS[key], up = 0;
+  for(var i=0;i<r.src.length;i++) if(state.done[r.src[i]]) { up = r.total; break; }
+  return [["In Tally", String(r.total)],
           ["Uploaded to MyBillBook", String(up)],
-          ["Pending", String(e.total-up)],
+          ["Pending", String(r.total-up)],
           ["Failed", "0"],
-          ["Last uploaded", up ? "20-Apr-26  12:37" : "—"]];
+          ["Last uploaded", up ? "20-Apr-26  12:37" : "\u2014"]];
 }
 
 /* ---------------- one delegated click handler ---------------- */
@@ -502,7 +883,12 @@ document.addEventListener("click", function(ev){
   var el = ev.target.closest ? ev.target.closest("[data-act]") : null;
   if(!el) return;
   var act = el.getAttribute("data-act"), arg = el.getAttribute("data-arg");
+  if(state.modal==="loading") return;
   if(act==="menu"){ setIdx(parseInt(arg,10)); activate(); }
+  else if(act==="yes"){ confirmYes(); }
+  else if(act==="no"){ confirmNo(); }
+  else if(act==="uploaderrors"){ uploadWithErrors(); }
+  else if(act==="viewerrors"){ viewErrors(); }
   else if(act==="company"){ chooseCompany(parseInt(arg,10)); }
   else if(act==="mobile"){ submitMobile(); }
   else if(act==="otp"){ submitOtp(); }
@@ -513,16 +899,60 @@ document.addEventListener("click", function(ev){
   else if(act==="reset"){ reset(state.loggedIn); }
   else if(act==="reset-out"){ reset(false); }
   else if(act==="reset-in"){ reset(true); }
+  else if(act==="yes"){ confirmYes(); }
+  else if(act==="no"){ confirmNo(); }
+  else if(act==="uploaderr"){ uploadWithErrors(); }
+  else if(act==="viewerr"){ openErrors(); }
+  else if(act==="errrow"){ state.errIdx = parseInt(arg,10); renderErrors(); }
+  else if(act==="errremove"){ state.errRemoved[state.errIdx] = true; renderErrors(); }
+  else if(act==="errrestore"){ state.errRemoved[state.errIdx] = false; renderErrors(); }
+  else if(act==="errspace"){ state.errSel[state.errIdx] = !state.errSel[state.errIdx]; renderErrors(); }
+  else if(act==="errquit"){ state.screen="upload"; render(); }
+  else if(act==="uploadledgers" || act==="uploadignore"){ errScreenUpload(act==="uploadignore"); }
 });
 
 /* ---------------- keyboard ---------------- */
 document.addEventListener("keydown", function(ev){
   var k = ev.key;
+  if(state.modal==="loading"){ ev.preventDefault(); return; }
+  if(state.modal==="confirm"){
+    ev.preventDefault();
+    if(k==="y" || k==="Y" || k==="Enter") confirmYes();
+    else if(k==="n" || k==="N" || k==="Escape") confirmNo();
+    return;
+  }
+  if(state.modal==="errors"){
+    ev.preventDefault();
+    if(k==="v" || k==="V") openErrors();
+    else if(k==="u" || k==="U" || k==="Enter") uploadWithErrors();
+    else if(k==="q" || k==="Q" || k==="Escape") confirmNo();
+    return;
+  }
+  if(state.screen==="errors" && !state.modal){
+    if(k==="ArrowDown"){ ev.preventDefault(); errMove(1); }
+    else if(k==="ArrowUp"){ ev.preventDefault(); errMove(-1); }
+    else if(k===" "){ ev.preventDefault(); state.errSel[state.errIdx] = !state.errSel[state.errIdx]; renderErrors(); }
+    else if(k==="r" || k==="R"){ ev.preventDefault(); state.errRemoved[state.errIdx] = true; renderErrors(); }
+    else if(k==="u" || k==="U"){ ev.preventDefault(); state.errRemoved[state.errIdx] = false; renderErrors(); }
+    else if(k==="q" || k==="Q" || k==="Escape"){ ev.preventDefault(); state.screen="upload"; render(); }
+    else if(k==="F5" || k==="F9"){ ev.preventDefault(); errScreenUpload(k==="F9"); }
+    return;
+  }
   if(k==="Escape"){ ev.preventDefault(); back(); return; }
   if(state.modal==="company"){
-    if(k==="ArrowDown"){ ev.preventDefault(); state.coIdx=(state.coIdx+1)%COMPANIES.length; renderModal(); }
-    else if(k==="ArrowUp"){ ev.preventDefault(); state.coIdx=(state.coIdx-1+COMPANIES.length)%COMPANIES.length; renderModal(); }
-    else if(k==="Enter"){ ev.preventDefault(); chooseCompany(state.coIdx); }
+    if(state.coPicked){
+      if(k==="Enter"){ ev.preventDefault(); confirmCompany(); }
+      return;
+    }
+    var f = filtered();
+    if(k==="ArrowDown" || k==="ArrowUp"){
+      ev.preventDefault();
+      if(!f.length) return;
+      var p = f.indexOf(state.coIdx); if(p<0) p = 0;
+      p = (p + (k==="ArrowDown"?1:-1) + f.length) % f.length;
+      state.coIdx = f[p]; renderCoList();
+    }
+    else if(k==="Enter"){ ev.preventDefault(); if(state.coIdx>=0) chooseCompany(state.coIdx); }
     return;
   }
   if(state.modal){
