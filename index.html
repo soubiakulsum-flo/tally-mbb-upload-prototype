@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1280">
+<title>MyBillBook Integration – Tally to MBB Upload (Prototype)</title>
+<style>
+  :root{
+    --tally-blue:#1f63ad; --tally-bar:#2a6cb2;
+    --panel:#d3e3f6; --panel-line:#a9c6e6; --right-panel:#d9e7f7;
+    --link:#1b4f8f; --label:#5b83ac; --hl:#ffc733;
+    --field:#fdfdfd; --field-focus:#ffeeb4; --dim:rgba(110,125,140,.42);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:#5a6570;
+    font-family:"Segoe UI",Tahoma,"Noto Sans",Arial,sans-serif;font-size:14px;color:#12395f}
+  .wrap{height:100%;display:flex;flex-direction:column}
+
+  .topbar{background:var(--tally-blue);color:#fff;display:flex;align-items:flex-start;
+    padding:6px 10px 8px;gap:14px;position:relative;flex:none;min-height:72px;overflow:hidden}
+  .logo{line-height:1;font-style:italic;font-weight:700;white-space:nowrap}
+  .logo .t{font-size:22px}
+  .logo .p{font-size:19px;display:block;margin-top:-3px}
+  .logo .ed{font-style:normal;font-weight:600;font-size:15px;color:#d7e6f7;margin-left:6px}
+  .search{background:#fff;border-radius:4px;color:#6d7a86;font-size:13px;padding:5px 10px;
+    position:absolute;left:50%;transform:translateX(-50%);top:8px;width:470px}
+  .menurow{display:flex;align-items:center;position:absolute;right:10px;top:40px}
+  .menurow>div{padding:4px 14px;font-size:13.5px;white-space:nowrap}
+  .menurow .on{background:#eaf2fb;color:#17518f;border-radius:2px}
+  u{text-decoration:underline;text-underline-offset:2px}
+
+  .titlebar{background:var(--tally-bar);color:#fff;font-size:12.5px;font-weight:600;
+    padding:3px 8px;display:flex;align-items:center;flex:none}
+  .titlebar .mid{margin:0 auto;font-weight:700}
+  .titlebar .x{cursor:pointer;padding:0 4px}
+
+  .body{flex:1;display:flex;min-height:0;background:#fff;position:relative}
+  .left{width:44%;border-right:1px solid #cfd8e0;padding:14px 18px}
+  .center{flex:1;position:relative}
+  .right{width:172px;background:var(--right-panel);padding:6px 5px;flex:none}
+
+  .metarow{display:flex;justify-content:space-between;font-size:11px;color:var(--label);letter-spacing:.3px}
+  .metaval{display:flex;justify-content:space-between;font-weight:700;font-size:13.5px;margin-top:2px}
+  .rule{border-bottom:1px solid #cfd8e0;margin:14px 0 6px}
+  .cohead{display:flex;justify-content:space-between;font-size:11px;color:var(--label);
+    letter-spacing:.3px;border-bottom:1px solid #cfd8e0;padding-bottom:4px}
+  .corow{display:flex;justify-content:space-between;font-weight:700;font-size:14px;
+    padding:10px 0 8px;border-bottom:1px solid #e3e9ef}
+  .foot{position:absolute;left:14px;bottom:8px;font-size:12.5px;font-weight:700}
+
+  .breadcrumb{text-align:center;font-style:italic;font-size:12.5px;color:#7b8794}
+  .menubox{position:absolute;left:50%;transform:translateX(-50%);
+    background:var(--panel);border:1px solid var(--panel-line);padding-bottom:16px}
+  .menubox .head{background:var(--tally-bar);color:#fff;text-align:center;font-size:13px;
+    font-weight:600;padding:3px 0}
+  .grp{font-size:10.5px;color:#6f90b3;letter-spacing:.6px;padding:12px 0 4px 22px}
+  .mi{padding:2px 22px;font-size:13.5px;color:var(--link);cursor:pointer;line-height:1.55;
+    overflow:hidden}
+  .mi b{font-weight:700;color:#10406f}
+  .mi.sel{background:var(--hl);color:#3a2b00}
+  .mi.sel b{color:#3a2b00}
+  .mi:hover:not(.sel){background:#c2d8f0}
+  .mi .st{float:right;font-size:11.5px;font-weight:600}
+  .mi .st.ok{color:#1a7a3c}      .mi.sel .st.ok{color:#4a3600}
+  .mi .st.busy{color:#a3651a;font-style:italic}  .mi.sel .st.busy{color:#5a4200}
+  .spacer{height:12px}
+
+  .rb{background:#fff;border:1px solid #b7cfe8;font-size:12.5px;padding:4px 6px;margin-bottom:4px;
+    display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+  .rb:hover{background:#f2f8ff}
+  .rb .k{color:#1b4f8f}
+  .rb .chev{color:#8aa9c8;font-size:11px}
+  .rgap{height:14px}
+
+  .dim{position:absolute;inset:0;background:var(--dim);display:flex;align-items:center;
+    justify-content:center;z-index:20}
+  .dlg{background:#f4f6f8;border:1px solid #98a7b5;box-shadow:0 2px 10px rgba(0,0,0,.25);
+    min-width:390px;padding:16px 22px 18px}
+  .dlg h3{margin:0 0 16px;text-align:center;font-size:15px;font-weight:700;
+    text-decoration:underline;text-underline-offset:4px}
+  .sect{font-weight:700;font-size:13.5px;text-decoration:underline;text-underline-offset:3px;margin:4px 0 10px}
+  .frow{display:flex;align-items:center;margin-bottom:9px;font-size:13.5px}
+  .frow label{width:215px}
+  .frow .colon{width:12px}
+  .frow b{font-size:13.5px}
+  input.tf{border:1px solid #c3cdd6;background:var(--field);padding:3px 6px;font:inherit;
+    font-size:13.5px;color:#12395f;outline:none;min-width:200px}
+  input.tf:focus{background:var(--field-focus);border-color:#c9a94a}
+  .hint{font-size:12px;color:#5a6b7c;line-height:1.5;margin:4px 0 0;max-width:440px}
+  .err{color:#b3261e;font-size:12px;margin-top:6px;min-height:15px}
+  .btnbar{display:flex;gap:8px;justify-content:flex-end;margin-top:16px;
+    border-top:1px solid #d7dee5;padding-top:12px}
+  .btn{background:#fff;border:1px solid #a9bed3;padding:4px 14px;font:inherit;font-size:13px;cursor:pointer;color:#12395f}
+  .btn:hover{background:#eaf2fb}
+  .btn.primary{background:var(--hl);border-color:#d9a616;font-weight:600}
+  .btn.primary:hover{background:#ffd45c}
+
+  .picker{background:var(--panel);border:1px solid var(--panel-line);min-width:360px;
+    box-shadow:0 2px 10px rgba(0,0,0,.25)}
+  .picker .head{background:var(--tally-bar);color:#fff;text-align:center;font-size:13px;
+    font-weight:600;padding:3px 0}
+  .pi{padding:5px 14px;font-size:13.5px;color:var(--link);cursor:pointer}
+  .pi.sel{background:var(--hl);color:#3a2b00}
+  .pi small{display:block;color:#6b7f93;font-size:11px}
+  .pi.sel small{color:#5c4a12}
+  .pnote{padding:8px 14px;font-size:11px;color:#5c7a99}
+
+  .calc{border-top:2px solid #6d7a86;background:#fff;flex:none;max-height:148px;overflow:auto}
+  .calc .ch{background:#8b98a4;color:#fff;font-size:11.5px;padding:1px 8px;display:flex;justify-content:space-between}
+  .calc .cl{font-size:12.5px;font-weight:700;padding:1px 8px;display:flex;gap:14px}
+  .calc .cl span{display:inline-block;width:34px;color:#3a5a7a}
+
+  .protobar{background:#2b3540;color:#c8d4de;font-size:11.5px;padding:5px 12px;display:flex;
+    gap:16px;align-items:center;flex:none}
+  .protobar b{color:#fff;font-weight:600}
+  .protobar .sp{margin-left:auto;display:flex;gap:8px}
+  .protobar button{background:#3d4a58;border:1px solid #55636f;color:#e5edf4;font:inherit;
+    font-size:11.5px;padding:2px 9px;cursor:pointer}
+  .protobar button:hover{background:#4c5a68}
+  kbd{background:#4a5764;border:1px solid #5f6d7a;border-bottom-width:2px;border-radius:3px;padding:0 4px;font-size:11px}
+  #crash{display:none;background:#7a1c16;color:#ffe8e6;font-size:12px;padding:6px 12px;
+    font-family:ui-monospace,Consolas,monospace}
+</style>
+
+<div class="wrap">
+  <div id="crash"></div>
+
+  <div class="topbar">
+    <div class="logo"><span class="t">Tally</span><span class="p">Prime<span class="ed">SILVER</span></span></div>
+    <div class="search">⌕ Find details entered in masters and transactions. (Alt+F)</div>
+    <div class="menurow">
+      <div><u>K</u>: Company</div><div><u>Y</u>: Data</div><div><u>Z</u>: Exchange</div>
+      <div class="on"><u>G</u>: Go To</div><div><u>O</u>: Import</div><div><u>E</u>: Export</div>
+      <div><u>M</u>: Share</div><div><u>P</u>: Print</div><div><u>9</u>: TallyCapital</div><div>F1: Help</div>
+    </div>
+  </div>
+
+  <div class="titlebar">
+    <span id="scrname">Gateway of Tally</span>
+    <span class="mid" id="scrco"></span>
+    <span class="x" data-act="reset">✕</span>
+  </div>
+
+  <div class="body">
+    <div class="left">
+      <div class="metarow"><span>CURRENT PERIOD</span><span>CURRENT DATE</span></div>
+      <div class="metaval"><span>1-Apr-26 to 31-Mar-27</span><span>Monday, 20-Apr-2026</span></div>
+      <div class="rule"></div>
+      <div class="cohead"><span>NAME OF COMPANY</span><span>DATE OF LAST ENTRY</span></div>
+      <div class="corow"><span>Optipack Solutions</span><span>(e)</span><span>20-Apr-26</span></div>
+      <div class="foot">* (e) Data exceptions exist</div>
+    </div>
+    <div class="center" id="center"></div>
+    <div class="right" id="right"></div>
+    <div id="modalroot"></div>
+  </div>
+
+  <div class="calc" id="calc" style="display:none">
+    <div class="ch"><span>Calculator</span><span>✕</span></div>
+    <div id="calclines"></div>
+  </div>
+
+  <div class="protobar">
+    <b>Prototype</b> — MyBillBook Integration · Tally to MBB upload
+    <span><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> select · <kbd>Esc</kbd> back</span>
+    <span class="sp">
+      <button data-act="reset-out">Reset (logged out)</button>
+      <button data-act="reset-in">Reset (logged in)</button>
+    </span>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+var COMPANIES = [
+  {name:"Optipack Solutions",     gst:"29AABCO1234D1ZP", id:"1eb01c2b-61cd-44e9-9f1d-0b65d958b094"},
+  {name:"Jailaxmi Krushi Kendra", gst:"27AAECJ8842K1Z9", id:"7c31a9d0-2f44-4b81-a0e2-19c7b3d5e4aa"},
+  {name:"Shree Traders",          gst:"24AAFCS9911M1ZK", id:"90f2c7ab-88de-4c15-9c33-6d21ab77c0e1"},
+  {name:"Party Numbers Test",     gst:"—",               id:"b41d55e9-7710-4f0a-9a16-2c8ee1f0d773"}
+];
+
+var GW = [
+  {g:"MASTERS"}, {t:"<b>C</b>reate"}, {t:"<b>A</b>lter"}, {t:"<b>CH</b>art of Accounts"},
+  {g:"TRANSACTIONS"}, {t:"<b>V</b>ouchers"}, {t:"Day Boo<b>K</b>"},
+  {g:"UTILITIES"}, {t:"Ba<b>N</b>king"}, {t:"<b>T</b>allyCapital"},
+  {g:"REPORTS"}, {t:"<b>B</b>alance Sheet"}, {t:"<b>P</b>rofit &amp; Loss A/c"},
+  {t:"<b>S</b>tock Summary"}, {t:"<b>R</b>atio Analysis"}, {sp:1},
+  {t:"<b>D</b>isplay More Reports"}, {t:"Dashb<b>O</b>ard"}, {sp:1},
+  {t:"<b>MY</b>BillBook Integration", go:"mbb"}, {sp:1}, {t:"<b>Q</b>uit"}
+];
+var MBB = [
+  {g:"UPLOAD"},    {t:"Tally to MBB (Upload)", act:"upload"},
+  {g:"DOWNLOAD"},  {t:"<b>M</b>BB to Tally (Download)"},
+  {g:"UTILITIES"}, {t:"T<b>A</b>lly Data Migration"}, {sp:1},
+  {t:"<b>Q</b>uit", act:"quit"}
+];
+var UP = [
+  {g:"MASTER INTEGRATION"},
+  {t:"Led<b>G</b>er Group", up:"ledgergroup"},
+  {t:"<b>C</b>ustomer &amp; Supplier Masters", up:"parties"},
+  {t:"Customer &amp; Supplier Masters (<b>B</b>ulk)", up:"parties_bulk"},
+  {t:"Item <b>U</b>nits", up:"units"},
+  {t:"Item Group", up:"itemgroup"},
+  {t:"I<b>T</b>em Masters", up:"items"},
+  {t:"It<b>E</b>m Masters (Bulk)", up:"items_bulk"},
+  {g:"TRANSACTIONS"}, {t:"Upload Tran<b>S</b>actions", up:"txns"},
+  {g:"REPORTS"},
+  {t:"<b>1</b>. Ledger Group", rep:"ledgergroup"},
+  {t:"<b>2</b>. Ledger",       rep:"parties"},
+  {t:"<b>3</b>. Unit",         rep:"units"},
+  {t:"<b>4</b>. Stock Group",  rep:"itemgroup"},
+  {t:"<b>5</b>. Stock Item",   rep:"items"},
+  {t:"<b>6</b>. Transactions", rep:"txns"}, {sp:1},
+  {t:"<b>Q</b>uit", act:"quit"}
+];
+var ENTITY = {
+  ledgergroup:{label:"Ledger Groups", total:18},
+  parties:{label:"Customer & Supplier Masters", total:214},
+  parties_bulk:{label:"Customer & Supplier Masters (Bulk)", total:214, bulk:true},
+  units:{label:"Item Units", total:12},
+  itemgroup:{label:"Item Groups", total:26},
+  items:{label:"Item Masters", total:96},
+  items_bulk:{label:"Item Masters (Bulk)", total:96, bulk:true},
+  txns:{label:"Transactions", total:273}
+};
+var MENUS = {
+  gateway:{arr:GW, title:"Gateway of Tally",      crumbs:[], w:300, top:56},
+  mbb:    {arr:MBB,title:"MYBillBook Integration",crumbs:["Gateway of Tally"], w:280, top:74},
+  upload: {arr:UP, title:"Tally to MBB - Upload", crumbs:["Gateway of Tally","MYBillBook Integration"], w:400, top:96}
+};
+var IDXKEY = {gateway:"gwIdx", mbb:"mbbIdx", upload:"upIdx"};
+
+var state = {
+  screen:"gateway", gwIdx:19, mbbIdx:1, upIdx:1,
+  modal:null, lastModal:null, coIdx:0,
+  mobile:"", otp:"", err:"",
+  loggedIn:false, company:null, syncDate:"1-Apr-26",
+  done:{}, busy:null, calcN:104, report:null
+};
+
+function $(id){ return document.getElementById(id); }
+function crash(msg){ var c=$("crash"); c.style.display="block"; c.textContent="Script error: "+msg; }
+window.onerror = function(m,s,l){ crash(m+" (line "+l+")"); };
+
+function getIdx(){ return state[IDXKEY[state.screen]]; }
+function setIdx(i){ state[IDXKEY[state.screen]] = i; }
+function selectable(arr){
+  var out=[]; for(var i=0;i<arr.length;i++) if(arr[i].t) out.push(i); return out;
+}
+
+/* ---------------- render ---------------- */
+function render(){
+  var M = MENUS[state.screen];
+  $("scrname").textContent = state.screen==="mbb" ? "MyBillBook Integration" : M.title;
+  $("scrco").textContent = state.company ? state.company.name.toUpperCase() : "";
+
+  var html = "";
+  if(M.crumbs.length){
+    html += '<div style="padding-top:'+(state.screen==="upload"?56:44)+'px">';
+    for(var c=0;c<M.crumbs.length;c++) html += '<div class="breadcrumb">'+M.crumbs[c]+'</div>';
+    html += '</div>';
+  }
+  html += '<div class="menubox" style="top:'+M.top+'px;width:'+M.w+'px">'
+        + '<div class="head">'+M.title+'</div>';
+  for(var i=0;i<M.arr.length;i++){
+    var row = M.arr[i];
+    if(row.g){ html += '<div class="grp">'+row.g+'</div>'; continue; }
+    if(row.sp){ html += '<div class="spacer"></div>'; continue; }
+    var st = "";
+    if(row.up){
+      if(state.busy===row.up) st = '<span class="st busy">uploading…</span>';
+      else if(state.done[row.up]) st = '<span class="st ok">✓ '+state.done[row.up]+'</span>';
+    }
+    html += '<div class="mi'+(i===getIdx()?" sel":"")+'" data-act="menu" data-arg="'+i+'">'+row.t+st+'</div>';
+  }
+  html += '</div>';
+  $("center").innerHTML = html;
+
+  var r = '<div class="rb"><span><span class="k">F2</span>: Date</span><span class="chev">‹</span></div>'
+        + '<div class="rb"><span><span class="k">F3</span>: Company</span><span class="chev">‹</span></div>';
+  if(state.screen==="mbb"){
+    r += '<div class="rgap"></div>'
+      + '<div class="rb" data-act="login"><span><span class="k">L</span>: '+(state.loggedIn?"Logout":"Login")+'</span><span class="chev">‹</span></div>'
+      + '<div class="rb" data-act="setcompany"><span><span class="k">C</span>: Set Company</span><span class="chev">‹</span></div>'
+      + '<div class="rb"><span><span class="k">I</span>: Integration Setup</span><span class="chev">‹</span></div>'
+      + '<div class="rgap"></div>'
+      + '<div class="rb"><span><span class="k">F5</span>: Remove<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BillBook ID</span><span class="chev">‹</span></div>';
+  }
+  $("right").innerHTML = r;
+
+  renderModal();
+}
+
+/* ---------------- modals ---------------- */
+function renderModal(){
+  var root = $("modalroot");
+
+  if(!state.modal){ root.innerHTML=""; state.lastModal=null; return; }
+
+  /* same dialog already on screen: refresh only the parts that change,
+     so the field the user is typing in is never destroyed */
+  if(state.lastModal === state.modal){
+    var e = root.querySelector(".err");
+    if(e) e.textContent = state.err;
+    if(state.modal==="company"){
+      var pis = root.querySelectorAll(".pi");
+      for(var k=0;k<pis.length;k++) pis[k].className = "pi" + (k===state.coIdx ? " sel" : "");
+    }
+    return;
+  }
+
+  var h = "";
+  if(state.modal==="login"){
+    h = dlg('<h3>MyBillBook Login</h3>'
+      + '<div class="frow"><label>Mobile No.</label><span class="colon">:</span>'
+      + '<input class="tf" id="f1" inputmode="numeric" maxlength="10" value="'+state.mobile+'" placeholder="10-digit number"></div>'
+      + '<p class="hint">Use the mobile number registered with your MyBillBook account. '
+      + 'A 6-digit verification code will be sent to this number.</p>'
+      + '<div class="err">'+state.err+'</div>'
+      + '<div class="btnbar"><button class="btn" data-act="back"><u>Q</u>: Quit</button>'
+      + '<button class="btn primary" data-act="mobile"><u>A</u>: Send code</button></div>');
+  }
+  else if(state.modal==="otp"){
+    h = dlg('<h3>Verify Mobile Number</h3>'
+      + '<div class="frow"><label>Enter OTP</label><span class="colon">:</span>'
+      + '<input class="tf" id="f1" inputmode="numeric" maxlength="6" value="'+state.otp+'" placeholder="6 digits"></div>'
+      + '<p class="hint">Code sent to +91 '+state.mobile+'. Resend available after 30 seconds.<br>'
+      + '<em>Prototype: any 6 digits will pass.</em></p>'
+      + '<div class="err">'+state.err+'</div>'
+      + '<div class="btnbar"><button class="btn" data-act="back"><u>Q</u>: Back</button>'
+      + '<button class="btn primary" data-act="otp"><u>A</u>: Verify</button></div>');
+  }
+  else if(state.modal==="company"){
+    var list = "";
+    for(var i=0;i<COMPANIES.length;i++){
+      list += '<div class="pi'+(i===state.coIdx?" sel":"")+'" data-act="company" data-arg="'+i+'">'
+            + COMPANIES[i].name + '<small>GSTIN '+COMPANIES[i].gst+' · ID '+COMPANIES[i].id.slice(0,8)+'…</small></div>';
+    }
+    h = '<div class="dim"><div class="picker"><div class="head">List of MyBillBook Companies</div>'
+      + '<div class="pnote">Linked to +91 '+(state.mobile||"98765 43210")+'</div>'
+      + list
+      + '<div class="pnote" style="border-top:1px solid #b9d0e8">Tally company <b>Optipack Solutions</b> '
+      + 'will be mapped to the company you select.</div></div></div>';
+  }
+  else if(state.modal==="syncdate"){
+    h = dlg('<h3>Sync Setup</h3><div class="sect">Tally to MBB (Upload)</div>'
+      + '<div class="frow"><label>Tally Company</label><span class="colon">:</span><b>Optipack Solutions</b></div>'
+      + '<div class="frow"><label>MyBillBook Company</label><span class="colon">:</span><b>'
+      + (state.company?state.company.name:"")+'</b></div>'
+      + '<div class="frow" style="margin-top:14px"><label>Sync Start (Opening Bal/Voucher Upload)</label>'
+      + '<span class="colon">:</span><input class="tf" id="f1" style="min-width:130px" value="'+state.syncDate+'"></div>'
+      + '<p class="hint">Vouchers dated on or after this date are uploaded to MyBillBook. Balances of all '
+      + 'ledgers and stock items as on this date are uploaded as opening balances, so nothing before it is '
+      + 'sent as individual transactions.</p>'
+      + '<div class="err">'+state.err+'</div>'
+      + '<div class="btnbar"><button class="btn" data-act="back"><u>Q</u>: Quit</button>'
+      + '<button class="btn primary" data-act="accept"><u>A</u>: Accept</button></div>');
+  }
+  else if(state.modal==="report"){
+    var ent = ENTITY[state.report], rows = reportRows(state.report), body="";
+    for(var j=0;j<rows.length;j++)
+      body += '<div class="frow"><label>'+rows[j][0]+'</label><span class="colon">:</span><b>'+rows[j][1]+'</b></div>';
+    h = dlg('<h3>'+ent.label+' – Upload Status</h3>'
+      + '<div class="frow"><label>MyBillBook Company</label><span class="colon">:</span><b>'
+      + (state.company?state.company.name:"—")+'</b></div>'
+      + '<div class="frow" style="margin-bottom:14px"><label>Sync start</label><span class="colon">:</span><b>'
+      + state.syncDate+'</b></div>' + body
+      + '<div class="btnbar"><button class="btn primary" data-act="back"><u>Q</u>: Quit</button></div>');
+  }
+
+  root.innerHTML = h;
+  state.lastModal = state.modal;
+  var f = $("f1");
+  if(f){ try{ f.focus(); f.setSelectionRange(f.value.length,f.value.length); }catch(err){} }
+}
+function dlg(inner){ return '<div class="dim"><div class="dlg">'+inner+'</div></div>'; }
+
+/* ---------------- navigation ---------------- */
+function move(d){
+  if(state.modal) return;
+  var sel = selectable(MENUS[state.screen].arr);
+  var p = sel.indexOf(getIdx());
+  if(p<0) p = 0;
+  p = (p + d + sel.length) % sel.length;
+  setIdx(sel[p]);
+  render();
+}
+function activate(){
+  if(state.busy) return;
+  var row = MENUS[state.screen].arr[getIdx()];
+  if(!row) return;
+  if(row.go==="mbb"){ state.screen="mbb"; state.mbbIdx=1; render(); return; }
+  if(row.act==="upload"){ startUpload(); return; }
+  if(row.up){ runItem(row.up); return; }
+  if(row.rep){ state.report=row.rep; state.modal="report"; render(); return; }
+  if(row.act==="quit"){
+    if(state.screen==="upload"){ state.screen="mbb"; state.mbbIdx=1; }
+    else { state.screen="gateway"; state.gwIdx=19; }
+    render(); return;
+  }
+  render();
+}
+function startUpload(){
+  state.err="";
+  if(!state.loggedIn){ state.modal="login"; state.mobile=""; }
+  else if(!state.company){ state.modal="company"; }
+  else { state.modal="syncdate"; }
+  render();
+}
+function openLogin(){
+  if(state.loggedIn){ state.loggedIn=false; state.company=null; state.modal=null; render(); return; }
+  state.modal="login"; state.mobile=""; state.err=""; render();
+}
+function openCompany(){
+  if(!state.loggedIn){ state.modal="login"; state.mobile=""; } else { state.modal="company"; }
+  state.err=""; render();
+}
+function back(){
+  if(state.modal==="otp"){ state.modal="login"; state.err=""; }
+  else if(state.modal==="syncdate"){ state.modal="company"; state.err=""; }
+  else if(state.modal){ state.modal=null; state.report=null; state.err=""; }
+  else if(state.screen==="upload"){ state.screen="mbb"; state.mbbIdx=1; }
+  else if(state.screen==="mbb"){ state.screen="gateway"; state.gwIdx=19; }
+  render();
+}
+function reset(loggedIn){
+  state.screen="gateway"; state.gwIdx=19; state.modal=null; state.lastModal=null;
+  state.err=""; state.mobile=""; state.otp=""; state.done={}; state.busy=null; state.calcN=104;
+  state.loggedIn = !!loggedIn;
+  state.company = loggedIn ? (state.company||COMPANIES[0]) : null;
+  $("calclines").innerHTML=""; $("calc").style.display="none";
+  render();
+}
+
+/* ---------------- form submits (read straight from the DOM) --------------- */
+function fieldValue(){ var f = $("f1"); return f ? f.value : ""; }
+
+function submitMobile(){
+  var m = fieldValue().replace(/\D/g,"");
+  if(m.length!==10){ state.err="Enter the 10-digit mobile number linked to your MyBillBook account."; renderModal(); return; }
+  state.mobile=m; state.otp=""; state.err=""; state.modal="otp"; render();
+}
+function submitOtp(){
+  var o = fieldValue().replace(/\D/g,"");
+  if(o.length!==6){ state.err="Enter the 6-digit code sent to your mobile number."; renderModal(); return; }
+  state.otp=o; state.loggedIn=true; state.err=""; state.coIdx=0; state.modal="company"; render();
+}
+function chooseCompany(i){
+  state.company = COMPANIES[i]; state.coIdx=i; state.err=""; state.modal="syncdate"; render();
+}
+function acceptSyncDate(){
+  var v = fieldValue().trim();
+  if(!/^\d{1,2}-[A-Za-z]{3}-\d{2}$/.test(v)){
+    state.err="Use the Tally date format, for example 1-Apr-26."; renderModal(); return;
+  }
+  state.syncDate=v; state.err=""; state.modal=null;
+  state.screen="upload"; state.upIdx=1; state.done={}; state.calcN=104;
+  $("calclines").innerHTML=""; $("calc").style.display="none";
+  render();
+}
+
+/* ---------------- per-item upload ---------------- */
+function logLine(text){
+  var calc=$("calc"), lines=$("calclines");
+  calc.style.display="block";
+  var d=document.createElement("div"); d.className="cl";
+  d.innerHTML='<span>'+(state.calcN++)+'</span>'+text;
+  lines.appendChild(d); calc.scrollTop=calc.scrollHeight;
+}
+function runItem(key){
+  if(state.busy) return;
+  var e = ENTITY[key];
+  state.busy = key; render();
+  var steps = key==="txns"
+    ? ["Reading Vouchers from "+state.syncDate+" ...",
+       "Uploading Transactions to MyBillBook ...",
+       e.total+" vouchers uploaded – 0 failed"]
+    : ["Reading "+e.label+" from Tally ...",
+       "Uploading "+e.label+(e.bulk?" in bulk":"")+" to MyBillBook ...",
+       e.total+" records uploaded – 0 failed"];
+  steps.forEach(function(s,i){
+    setTimeout(function(){
+      logLine(s);
+      if(i===steps.length-1){
+        state.done[key] = e.total + (key==="txns" ? " vouchers" : " records");
+        state.busy = null; render();
+      }
+    }, 450*(i+1));
+  });
+}
+function reportRows(key){
+  var e = ENTITY[key], up = state.done[key] ? e.total : 0;
+  return [["In Tally", String(e.total)],
+          ["Uploaded to MyBillBook", String(up)],
+          ["Pending", String(e.total-up)],
+          ["Failed", "0"],
+          ["Last uploaded", up ? "20-Apr-26  12:37" : "—"]];
+}
+
+/* ---------------- one delegated click handler ---------------- */
+document.addEventListener("click", function(ev){
+  var el = ev.target.closest ? ev.target.closest("[data-act]") : null;
+  if(!el) return;
+  var act = el.getAttribute("data-act"), arg = el.getAttribute("data-arg");
+  if(act==="menu"){ setIdx(parseInt(arg,10)); activate(); }
+  else if(act==="company"){ chooseCompany(parseInt(arg,10)); }
+  else if(act==="mobile"){ submitMobile(); }
+  else if(act==="otp"){ submitOtp(); }
+  else if(act==="accept"){ acceptSyncDate(); }
+  else if(act==="back"){ back(); }
+  else if(act==="login"){ openLogin(); }
+  else if(act==="setcompany"){ openCompany(); }
+  else if(act==="reset"){ reset(state.loggedIn); }
+  else if(act==="reset-out"){ reset(false); }
+  else if(act==="reset-in"){ reset(true); }
+});
+
+/* ---------------- keyboard ---------------- */
+document.addEventListener("keydown", function(ev){
+  var k = ev.key;
+  if(k==="Escape"){ ev.preventDefault(); back(); return; }
+  if(state.modal==="company"){
+    if(k==="ArrowDown"){ ev.preventDefault(); state.coIdx=(state.coIdx+1)%COMPANIES.length; renderModal(); }
+    else if(k==="ArrowUp"){ ev.preventDefault(); state.coIdx=(state.coIdx-1+COMPANIES.length)%COMPANIES.length; renderModal(); }
+    else if(k==="Enter"){ ev.preventDefault(); chooseCompany(state.coIdx); }
+    return;
+  }
+  if(state.modal){
+    if(k==="Enter"){
+      ev.preventDefault();
+      if(state.modal==="login") submitMobile();
+      else if(state.modal==="otp") submitOtp();
+      else if(state.modal==="syncdate") acceptSyncDate();
+      else back();
+    }
+    return;
+  }
+  if(k==="ArrowDown"){ ev.preventDefault(); move(1); }
+  else if(k==="ArrowUp"){ ev.preventDefault(); move(-1); }
+  else if(k==="Enter"){ ev.preventDefault(); activate(); }
+});
+
+render();
+</script>
